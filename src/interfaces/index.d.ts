@@ -1,4 +1,4 @@
-export interface Cliente {
+export interface ICliente {
   codigoCliente: number;
   nombresMadre?: string;
   apellidoMaternoMadre?: string;
@@ -27,13 +27,13 @@ export interface Cliente {
   deudaTotal?: number;
   fechaDeBloqueo?: Date;
   nota?: string;
-  hijo: Hijo[];
-  notas: Nota[];
-  notificaciones: Notificacion[];
-  pago: Pago[];
+  hijo: IHijo[];
+  notas: INota[];
+  notificaciones: INotificacion[];
+  pago: IPago[];
 }
 
-export interface Hijo {
+export interface IHijo {
   codigoHijo: number;
   codigoEscala?: number;
   codigoCliente: number;
@@ -45,12 +45,12 @@ export interface Hijo {
   fechaDeMatricula?: Date;
   salon: string;
   nota?: string;
-  cliente: Cliente;
-  notas: Nota[];
-  pagos: Pago[];
+  cliente: ICliente;
+  notas: INota[];
+  pagos: IPago[];
 }
 
-export interface Pago {
+export interface IPago {
   codigoPago: number;
   codigoCliente?: number;
   codigoHijo?: number;
@@ -71,16 +71,16 @@ export interface Pago {
   pagoConfirmado?: boolean;
   reciboEmitido?: boolean;
   nota?: string;
-  conceptos: Concepto[];
-  depositos: Deposito[];
-  notas: Nota[];
-  notificaciones: Notificacion[];
-  cliente?: Cliente;
-  hijo?: Hijo;
-  recibo?: Recibo;
+  conceptos: IConcepto[];
+  depositos: IDeposito[];
+  notas: INota[];
+  notificaciones: INotificacion[];
+  cliente?: ICliente;
+  hijo?: IHijo;
+  recibo?: IRecibo;
 }
 
-export interface Deposito {
+export interface IDeposito {
   codigoDeposito: number;
   codigoNotificacion?: number;
   codigoPago: number;
@@ -95,11 +95,11 @@ export interface Deposito {
   imagenDelVoucher?: string;
   depositoValidado: boolean;
   nota?: string;
-  pago: Pago;
-  notas: Nota[];
+  pago: IPago;
+  notas: INota[];
 }
 
-export interface Recibo {
+export interface IRecibo {
   codigoRecibo: number;
   codigoCliente: number;
   codigoPago: number;
@@ -127,11 +127,11 @@ export interface Recibo {
   montoDeRedondeo?: number;
   importeTotal: number;
   nota?: string;
-  notas: Nota[];
-  pago: Pago;
+  notas: INota[];
+  pago: IPago;
 }
 
-export interface Notificacion {
+export interface INotificacion {
   codigoNotificacion: number;
   codigoCliente: number;
   codigoPago?: number;
@@ -142,13 +142,13 @@ export interface Notificacion {
   concepto: string;
   mensaje: string;
   notaInterna?: string;
-  notas: Nota[];
-  cliente: Cliente;
-  pago?: Pago;
-  seguimientos: Seguimiento[];
+  notas: INota[];
+  cliente: ICliente;
+  pago?: IPago;
+  seguimientos: ISeguimiento[];
 }
 
-export interface Seguimiento {
+export interface ISeguimiento {
   codigoSeguimiento: number;
   codigoNotificacion: number;
   codigoCliente: number;
@@ -160,11 +160,11 @@ export interface Seguimiento {
   concepto: string;
   mensaje: string;
   notaInterna?: string;
-  notas: Nota[];
-  notificacion: Notificacion;
+  notas: INota[];
+  notificacion: INotificacion;
 }
 
-export interface Concepto {
+export interface IConcepto {
   codigoConcepto: number;
   codigoCliente: number;
   codigoPago?: number;
@@ -177,11 +177,11 @@ export interface Concepto {
   avisoFinal?: string;
   recibo?: string;
   nota?: string;
-  pago?: Pago;
-  notas: Nota[];
+  pago?: IPago;
+  notas: INota[];
 }
 
-export interface Escala {
+export interface IEscala {
   codigoEscala: number;
   codigoCliente: number;
   A?: string;
@@ -190,10 +190,10 @@ export interface Escala {
   D?: string;
   exonerado: boolean;
   nota?: string;
-  notas: Nota[];
+  notas: INota[];
 }
 
-export interface Nota {
+export interface INota {
   codigoNota: number;
   codigoCliente?: number;
   codigoHijo?: number;
@@ -205,13 +205,13 @@ export interface Nota {
   codigoConcepto?: number;
   codigoEscala?: number;
   texto: string;
-  cliente?: Cliente;
-  concepto?: Concepto;
-  deposito?: Deposito;
-  escala?: Escala;
-  hijo?: Hijo;
-  notificacion?: Notificacion;
-  pago?: Pago;
-  recibo?: Recibo;
-  seguimiento?: Seguimiento;
+  cliente?: ICliente;
+  concepto?: IConcepto;
+  deposito?: IDeposito;
+  escala?: IEscala;
+  hijo?: IHijo;
+  notificacion?: INotificacion;
+  pago?: IPago;
+  recibo?: IRecibo;
+  seguimiento?: ISeguimiento;
 }
