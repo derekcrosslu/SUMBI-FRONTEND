@@ -3,37 +3,16 @@ import { supabaseClient } from "./utility/supabaseClient";
 export const TOKEN_KEY = "refine-auth";
 
 export const authProvider: AuthBindings = {
-    login: async ({ email, password, providerName }) => {
-        console.log("email, password, providerName : ", email, password, providerName );
-        // sign in with oauth
+    login: async ({ email, password }) => {
+  
         try {
-            if (providerName) {
-                const { data, error } =
-                    await supabaseClient.auth.signInWithOAuth({
-                        provider: providerName,
-                    });
-// console.log("data, error: ", data, error);
-                if (error) {
-                    return {
-                        success: false,
-                        error,
-                    };
-                }
 
-                if (data?.url) {
-                    return {
-                        success: true,
-                    };
-                }
-            }
-
-            // sign in with email and password
             const { data, error } =
             await supabaseClient.auth.signInWithPassword({
                 email,
                 password,
             });
-            console.log("data, error: ", data, error);
+
 
             if (error) {
                 return {
@@ -112,12 +91,7 @@ export const authProvider: AuthBindings = {
             }
 
             if (data) {
-                // notification.open({
-                //     type: "success",
-                //     message: "Success",
-                //     description:
-                //         "Please check your email for a link to reset your password. If it doesn't appear within a few minutes, check your spam folder.",
-                // });
+
                 return {
                     success: true,
                 };
@@ -198,7 +172,7 @@ export const authProvider: AuthBindings = {
         try {
             const { data } = await supabaseClient.auth.getSession();
             const { session } = data;
-            // console.log("session: ", session);
+
 
             if (!session) {
                 return {

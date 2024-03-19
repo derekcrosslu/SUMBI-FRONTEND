@@ -1,19 +1,16 @@
 import {
   Refine,
-  GitHubBanner,
   WelcomePage,
   Authenticated,
+  DataProvider,
 } from "@refinedev/core";
-import { dataProvider, liveProvider } from "@refinedev/supabase";
-import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
+import { DevtoolsProvider } from "@refinedev/devtools";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 
 import {
   AuthPage,
   ErrorComponent,
   useNotificationProvider,
-  ThemedLayoutV2,
-  ThemedSiderV2,
 } from "@refinedev/antd";
 import "@refinedev/antd/dist/reset.css";
 
@@ -33,29 +30,27 @@ import { Login } from "./pages/login";
 import { Register } from "./pages/register";
 import { ForgotPassword } from "./pages/forgotPassword";
 import { authProvider } from "./authProvider";
-import { supabaseClient } from "./utility";
-console.log("supabaseClient: ", supabaseClient);
 
 function App() {
   const { t, i18n } = useTranslation();
 
+  const API_URL = "http://localhost:3000";
+  const dataProvider = nestjsxCrudDataProvider(API_URL);
+
   const i18nProvider = {
     translate: (key: string, params: object) => t(key, params),
-    changeLocale: (lang: string) => i18n.changeLanguage("es"),
+    changeLocale: (lang: string) => i18n.changeLanguage(lang),
     getLocale: () => i18n.language,
   };
-  console.log("i18nProvider: ", i18nProvider);
 
   return (
     <BrowserRouter>
-      <GitHubBanner />
       <RefineKbarProvider>
         <ColorModeContextProvider>
           <AntdApp>
             <DevtoolsProvider>
               <Refine
-                dataProvider={dataProvider(supabaseClient)}
-                liveProvider={liveProvider(supabaseClient)}
+                dataProvider={dataProvider}
                 notificationProvider={useNotificationProvider}
                 routerProvider={routerBindings}
                 authProvider={authProvider}
@@ -63,19 +58,26 @@ function App() {
                 options={{
                   syncWithLocation: true,
                   warnWhenUnsavedChanges: true,
-                  //   useNewQueryKeys: true,
-                  //   projectId: "XHSDAH-Vz5nYS-Kd78ow",
+                  useNewQueryKeys: true,
+                  projectId: "Q9Klbd-fjMH8M-grc54Q",
                 }}
+                resources={[
+                  {
+                    name: "tasks",
+                  },
+                ]}
               >
                 <Routes>
-                  <Route index element={<WelcomePage />} />
                   <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/forgot-password" element={<ForgotPassword />} />
+                  <Route path="/tasks" />
+                  <Route path="/tasks/:id" />
                 </Routes>
                 <RefineKbar />
                 <UnsavedChangesNotifier />
                 <DocumentTitleHandler />
               </Refine>
-              <DevtoolsPanel />
             </DevtoolsProvider>
           </AntdApp>
         </ColorModeContextProvider>
